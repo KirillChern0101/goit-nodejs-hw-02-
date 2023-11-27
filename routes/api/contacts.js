@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const authMiddleware = require("../../middleware/authMiddleware");
 const Joi = require("joi");
 const contactsMethods = require("../../models/contacts");
 const contactControllers = require("./contactControllers");
@@ -9,6 +10,8 @@ const contactSchema = Joi.object({
   email: Joi.string().required(),
   phone: Joi.number().required(),
 });
+
+router.use(authMiddleware);
 
 router.get("/", async (req, res, next) => {
   try {
